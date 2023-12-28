@@ -7,7 +7,7 @@ export const addMovie = (movie) => {
     console.log('Adding movie to favorites:', movie)
     return async function (dispatch) {
         try {
-            const response = await axios.post("http://localhost:3001/movies/create", movie);
+            const response = await axios.post("https://servidor-favoritos.onrender.com/movies/create", movie);
             dispatch({
                 type: ADD_FAVORITE,
                 payload: response.data.data 
@@ -24,7 +24,7 @@ export const deleteMovie = (id) => {
     console.log('Deleting movie from favorites with ID:', id);
     return async function (dispatch) {
         try {
-            await axios.delete(`http://localhost:3001/movies/delete/${id}`);
+            await axios.delete(`https://servidor-favoritos.onrender.com/movies/delete/${id}`);
             dispatch({
                 type: DELETE_FAVORITE,
                 payload: id
@@ -39,7 +39,7 @@ export const deleteMovie = (id) => {
 export const getFavorites = () => {
     return async function (dispatch) {
         try {
-            const response = await axios.get('http://localhost:3001/movies/read');
+            const response = await axios.get('https://servidor-favoritos.onrender.com/movies/read');
             dispatch({
                 type: GET_FAVORITES,
                 payload: response.data.data 

@@ -3,6 +3,7 @@ import React from 'react';
 import Home from './components/LandingPage/Home';
 import DetailMovie from "./components/Detail/DetailMovie/DetailMovie";
 import DetailSerie from "./components/Detail/DetailSerie/DetailSerie";
+import Favorites from "./components/Favorites/favorites";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
           <Route path="/" element={<Home/>}/>
           <Route path="/movie/:id" element={<DetailMovie/>}/>
           <Route path="/serie/:id" element={<DetailSerie/>}/>
+          <Route path="/favorites" element={<Favorites/>}/>
         </Routes>
     </BrowserRouter>
 

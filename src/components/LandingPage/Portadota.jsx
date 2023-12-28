@@ -10,12 +10,17 @@ text-align: center;
 
  h1{
   color: white;
-  font-size:5rem;
+  font-size:1.5rem;
   position: absolute;
   top: 50%;
   left:50%;
   transform: translate(-50%, -50%);
  }
+ @media (max-width: 768px) {
+  h1, h2, h3 {
+    display: none; /* Oculta el título en dispositivos móviles */
+  }
+}
 
  h2 {
   font-size:2.5rem;
@@ -68,7 +73,7 @@ const Portada = () => {
           {mostPopular.poster_path && (
             <Image src={`https://image.tmdb.org/t/p/w500/${mostPopular.backdrop_path}`} alt="" />
           )}
-          {mostPopular.name && <h1>{mostPopular.name}</h1>}
+          {mostPopular.title && <h1>{mostPopular.title}</h1>}
           <h2>Más popular</h2>
           <h3>⭐⭐⭐⭐⭐</h3>
         

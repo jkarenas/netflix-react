@@ -7,7 +7,6 @@ import styled from '@emotion/styled'
 const Container = styled.div`
     display: flex;
     flex-direction: column;
-    
     h2{
         color: #df7f81;
         padding: 1.5rem;   
@@ -33,16 +32,15 @@ const GetTopRating = () => {
   const Rating = async () => {
     try {
       const res = await axios.get('https://api.themoviedb.org/3/movie/top_rated?api_key=9b4a53b9c46e8e5ad58cc4b20b76d9ff');
-      setTopRating(res.data.results.slice(0, 4));  //se limita a 10 resultados
+      setTopRating(res.data.results.slice(0, 4));  
     } catch (error) {
       console.error('Error fetching data:', error);
     }
   };
 
-  // Llamada a la función al cargar el componente
   useEffect(() => {
     Rating();
-  }, []); // Se pasa un array vacío para que se ejecute solo una vez al cargar el componente
+  }, []); 
 
   return (
     <Container>

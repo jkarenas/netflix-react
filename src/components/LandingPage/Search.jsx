@@ -14,6 +14,7 @@ const Container = styled.div`
   max-width: 600px;
   margin: 0 auto;
   font-family: Arial, sans-serif;
+  color:gray;
 `
 ;
 
@@ -68,7 +69,10 @@ const ResultsContainer = styled.div`
     background-color:black;
     display:flex;
     flex-direction: column;
-    padding: 0 10px 0 10px;
+    .info{
+      padding:9px;
+    }
+
 
     h1 {
         margin-top:0;
@@ -104,7 +108,7 @@ const ResultsContainer = styled.div`
 
     img {
       width: 100%;
-      height:60%;
+      height: 50%;
       border-radius: 4px;
 
       mask-image: linear-gradient(
@@ -187,9 +191,10 @@ const Search = ({onSearchResults}) => {
       {loading && <Spinner />}
       <ResultsContainer style={{ paddingTop: searchResults.length > 0 ? '200px' : '0' }}>
         {searchResults.map((movie) => (
-          <div key={movie.id} className="movie-card">
-            <Link to={`/movie/${movie.id}`}>
-              <img src={`https://image.tmdb.org/t/p/w200/${movie.poster_path}`} alt="" />
+          <div key={movie.id} >
+            <Link className="movie-card" to={`/movie/${movie.id}`}>
+              <img className='movieImg' src={`https://image.tmdb.org/t/p/w200/${movie.poster_path}`} alt="" />
+              <div className='info'>
               <h1>{movie.title}</h1>
               <h3>{`released: ${movie.release_date}  /  language ${movie.original_language}`}</h3>
               <h2>SUMMARY</h2>
@@ -199,6 +204,7 @@ const Search = ({onSearchResults}) => {
                 <AiFillSave />
                 <PiTag />
                 <PiShareNetwork />
+              </div>
               </div>
             </Link>
           </div>

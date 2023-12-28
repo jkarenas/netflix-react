@@ -3,12 +3,21 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styled from '@emotion/styled';
 import Search from '../../LandingPage/Search';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from "react-router-dom";
-
+import { getFavorites, deleteMovie, addMovie } from '../../../redux/actions/actions';
+import {useDispatch, useSelector} from "react-redux"
 
 const Container = styled.div`
+    .add {
+        color:gray;
+    }
+    .comeback{
+        color:white;
+        background-color:red;
+        border-radius:0.7rem;
+        padding:6px;
+    }
+
     .bigImage {
         width: 100%;
         height: 30rem;
@@ -72,20 +81,25 @@ const Container = styled.div`
 const DetailMovie = () => {
     const [showSearchResults, setShowSearchResults] = useState(false);
     const [getDetail, setGetDetail] = useState({});
-    const [isWishlist, setIsWishlist] = useState(false); // Estado de la lista de deseos
+    const [fav, setFav] = useState(false); 
+    
+    const favoritesList = useSelector((state) => state.list)
+    console.log(favoritesList)
+    
+
+    const dispatch = useDispatch();
+    
 
     const navigate = useNavigate();
     const goBackHandler = () => {
         navigate(-1);
       };
-    const toggleWishlist = () => {
-        setIsWishlist(!isWishlist); // Cambiar el estado de la lista de deseos al hacer clic en el corazón
-    };
-
 
     const handleSearchResults = (areResultsVisible) => {
-  setShowSearchResults(areResultsVisible);
-};
+         setShowSearchResults(areResultsVisible);
+        };
+
+
     
     const { id } = useParams();
 
@@ -103,6 +117,31 @@ const DetailMovie = () => {
         fetchMovieDetail();
     }, [id]);
 
+    useEffect(() => {
+        dispatch(getFavorites());
+      }, [dispatch]);
+    
+    useEffect(() => {
+        if (getDetail.id) { 
+            const isMovieInFavorites = favoritesList.some((movie) => movie.id === getDetail.id);
+            setFav(isMovieInFavorites);
+        }
+    }, [getDetail, favoritesList]);
+
+
+        function handleFavorite(data) {
+        const isFavorite = favoritesList.some((movie) => movie.id === data.id);
+            // console.log('isFavorite', isFavorite)
+        if (!isFavorite) {
+            setFav(true)
+            dispatch(addMovie(data)); 
+            // console.log('Added to favorites:', data);
+        } else {
+            dispatch(deleteMovie(data.id)); 
+            setFav(false)
+            // console.log('Removed from favorites:', data.id);
+        }
+    }
     return (
         <div>
         <Search onSearchResults={handleSearchResults} />
@@ -126,13 +165,15 @@ const DetailMovie = () => {
                     <p className='movieTitle'> {getDetail.title}</p>
                     <p className='overview'>Overview: {getDetail.overview}</p>
                     <div className='heart-comeBack'>
-                            <FontAwesomeIcon>
-                                icon={isWishlist ? faHeart : faHeart}
-                                style={{ color: isWishlist ? 'red' : 'gray', cursor: 'pointer', fontSize: '40px' }}
-                                onClick={toggleWishlist}
-                            </FontAwesomeIcon>    
+                            {
+                                fav ? (
+                                    <div className='add' onClick={() => handleFavorite(getDetail)}>❤️Agregado a favoritos</div>
+                                ) : (
+                                    <div className='add' onClick={() => handleFavorite(getDetail)}>🩶Agregar a favoritos</div>
+                                )
+                            }
                             
-                            <h1 onClick={goBackHandler}>regresar</h1>
+                            <h2 className='comeback' onClick={goBackHandler}>Regresar</h2>
                     </div>
                 </div>
             </div>

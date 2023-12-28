@@ -6,18 +6,20 @@ import Carousel from 'react-elastic-carousel';
 
 
 const breakPoints = [
-    {width:1, itemsToShow:2},
-    {width:550, itemsToShow:3},
-    {width:768, itemsToShow:4},
-    {width:1200, itemsToShow:5},
-    
+  { width: 1, itemsToShow: 2 },
+  { width: 550, itemsToShow: 3 },
+  { width: 768, itemsToShow: 4 },
+  { width: 1200, itemsToShow: 5 },
+
 ]
 const Container = styled.div`
 h2{
     color: #df7f81;
     padding: 1.5rem;
 }
+
 .rec-arrow {
+    box-shadow:none;
     background-color:black;
     color: white;
     border-radius: 50%;
@@ -28,8 +30,8 @@ h2{
         background-color: black; /* Establece el mismo color para mantener la consistencia */
       }
     &:focus {
-        background-color: black;
-        outline: none; /* Eliminar el contorno de enfoque */
+        
+        outline: none; 
       } 
   }
 
@@ -37,6 +39,12 @@ h2{
   .rec-dot {
     /* Oculta los indicadores circulares */
     display: none;
+  }
+  .iWchow:hover:enabled,
+  .iWchow:focus:enabled {
+    color: rgb(255, 255, 255);
+    background-color: black;
+    box-shadow: rgb(51, 51, 51) 0px 0px 2px 0px;
   }
 `
 
@@ -65,24 +73,24 @@ const PopularMovies = () => {
 
   return (
     <Container>
-      
-        <h2>Peliculas populares</h2>
-           <Carousel breakPoints={breakPoints}>
-      {trending.map((element) => (
-        <div key={element.id}>
-          <Link to={`/movie/${element.id}`}>
-          <Image
-            src={`https://image.tmdb.org/t/p/w400/${element.backdrop_path}`}
-            alt=""  
-          />
-          {/* <h1>{element.title}</h1> */}
-          </Link>
-        </div>
-         
-      ))}
-    </Carousel> 
-     
-        
+
+      <h2>Peliculas populares</h2>
+      <Carousel breakPoints={breakPoints}>
+        {trending.map((element) => (
+          <div key={element.id}>
+            <Link to={`/movie/${element.id}`}>
+              <Image
+                src={`https://image.tmdb.org/t/p/w400/${element.backdrop_path}`}
+                alt=""
+              />
+              {/* <h1>{element.title}</h1> */}
+            </Link>
+          </div>
+
+        ))}
+      </Carousel>
+
+
     </Container>
 
   );
